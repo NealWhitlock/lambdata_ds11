@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="lambdata-NealWhitlock",
-    version="0.1.3",
+    version="0.1.5",
     author="NealWhitlock",
     author_email="nealwhitlock@gmail.com",
     description="Example package for lambda school DS Unit 3",

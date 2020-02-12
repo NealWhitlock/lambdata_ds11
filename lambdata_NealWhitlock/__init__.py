@@ -10,8 +10,10 @@ ONES = pd.DataFrame(np.ones(10)) # Global variables in all caps
 ZEROS = pd.DataFrame(np.zeros(50))
 
 def na_filler(dataframe, n=3):
-    '''Fill the na values of a dataframe by taking the mean of n values above and below the missing value.
-    Only works on columns input into function'''
+    '''
+    Fill the na values of a dataframe by taking the mean of n values above and below the missing value.
+    Only works on columns input into function
+    '''
 
     for col in dataframe.describe().columns:
         nums = list(zip(np.where(dataframe.isna())[0],np.where(dataframe.isna())[1]))
