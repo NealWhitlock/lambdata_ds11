@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name="lambdata-ds11",
-    version="0.1.2",
+    name="lambdata-NealWhitlock",
+    version="0.1.3",
     author="NealWhitlock",
     author_email="nealwhitlock@gmail.com",
     description="Example package for lambda school DS Unit 3",
