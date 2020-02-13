@@ -1,6 +1,6 @@
 import pandas as pd
 
-class na_filler(df, n=3):
+class na_filler(object):
     '''
     Fill the na values of a dataframe by taking the mean of n values above and below the missing value.
     Only works on numeric columns and is meant for rows where order matters but some values are missing.
@@ -10,7 +10,7 @@ class na_filler(df, n=3):
     def __init__(self, df):
         self.df = df
 
-    
+    def fill(df, n=3)
         for col in df.describe().columns: # Look at only numeric columns
             nums = list(zip(np.where(df.isna())[0],np.where(df.isna())[1])) # Combine indices into list
 
@@ -21,5 +21,4 @@ class na_filler(df, n=3):
                     if not (pd.isna(df.iloc[nums[i][0]+j][nums[i][1]])): # Skip if the value is NaN
                         values.append(df.iloc[nums[i][0]+j][nums[i][1]]) # Add to to list
             df.iat[nums[i][0],nums[i][1]] = sum(values)/len(values) # Replace the NaN with the mean
-            
         return df
