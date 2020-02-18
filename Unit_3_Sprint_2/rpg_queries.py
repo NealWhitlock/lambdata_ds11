@@ -12,8 +12,8 @@ FROM charactercreator_character
 """
 
 result1 = cursor.execute(query1)
-num = cursor.fetchone()
-print("Number of characters:", num[0])
+num_characters = cursor.fetchone()
+print("Number of characters:", num_characters[0])
 print('-'*40)
 
 # How many characters in each subclass?
@@ -123,6 +123,7 @@ for row in result:
     total_items += row[3]
     count += 1
 print(f"On average, each character that has a weapon has {(total_items/count):.2f} weapons.")
+print(f"On the other hand, among all players the average is {(total_items/num_characters[0]):.2f} weapons.")
 print('-'*40)
 
 cursor.close()
