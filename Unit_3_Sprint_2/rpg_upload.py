@@ -115,5 +115,114 @@ for item in armory_weapon:
     VALUES """ + str(item)
     postg_cursor.execute(insert_query)
 
+# Get fighter info
+query = 'SELECT * FROM charactercreator_fighter'
+fighters = sql_cursor.execute(query).fetchall()
+
+# Create new table for fighters
+fighter_query = """
+CREATE TABLE IF NOT EXISTS charactercreator_fighter (
+    character_ptr_id SERIAL PRIMARY KEY,
+    using_shield int,
+    rage int
+);
+"""
+postg_cursor.execute(fighter_query)
+
+# Insert data into fighters table
+for fighter in fighters:
+    insert_query = """
+    INSERT INTO charactercreator_fighter
+    (character_ptr_id, using_shield, rage)
+    VALUES """ + str(fighter)
+    postg_cursor.execute(insert_query)
+
+# Get mage info
+query = 'SELECT * FROM charactercreator_mage'
+mages = sql_cursor.execute(query).fetchall()
+
+# Create new table for mages
+mage_query = """
+CREATE TABLE IF NOT EXISTS charactercreator_mage (
+    character_ptr_id SERIAL PRIMARY KEY,
+    has_pet int,
+    mana int
+);
+"""
+postg_cursor.execute(mage_query)
+
+# Insert data into mage table
+for mage in mages:
+    insert_query = """
+    INSERT INTO charactercreator_mage
+    (character_ptr_id, has_pet, mana)
+    VALUES """ + str(mage)
+    postg_cursor.execute(insert_query)
+
+# Get cleric info
+query = 'SELECT * FROM charactercreator_cleric'
+clerics = sql_cursor.execute(query).fetchall()
+
+# Create new table for clerics
+clerics_query = """
+CREATE TABLE IF NOT EXISTS charactercreator_cleric (
+    character_ptr_id SERIAL PRIMARY KEY,
+    using_shield int,
+    mana int
+);
+"""
+postg_cursor.execute(clerics_query)
+
+# Insert data into clerics table
+for cleric in clerics:
+    insert_query = """
+    INSERT INTO charactercreator_cleric
+    (character_ptr_id, using_shield, mana)
+    VALUES """ + str(cleric)
+    postg_cursor.execute(insert_query)
+
+# Get thief info
+query = 'SELECT * FROM charactercreator_thief'
+thieves = sql_cursor.execute(query).fetchall()
+
+# Create new table for thieves
+thief_query = """
+CREATE TABLE IF NOT EXISTS charactercreator_thief (
+    character_ptr_id SERIAL PRIMARY KEY,
+    is_sneaking int,
+    energy int
+);
+"""
+postg_cursor.execute(thief_query)
+
+# Insert data into thief table
+for thief in thieves:
+    insert_query = """
+    INSERT INTO charactercreator_thief
+    (character_ptr_id, is_sneaking, energy)
+    VALUES """ + str(thief)
+    postg_cursor.execute(insert_query)
+
+# Get necromancer info
+query = 'SELECT * FROM charactercreator_necromancer'
+necromancers = sql_cursor.execute(query).fetchall()
+
+# Create new table for necromancer
+necromancer_query = """
+CREATE TABLE IF NOT EXISTS charactercreator_necromancer (
+    mage_ptr_id SERIAL PRIMARY KEY,
+    talisman_charged int
+);
+"""
+postg_cursor.execute(necromancer_query)
+
+# Insert data into necromancer table
+for necromancer in necromancers:
+    insert_query = """
+    INSERT INTO charactercreator_necromancer
+    (mage_ptr_id, talisman_charged)
+    VALUES """ + str(necromancer)
+    postg_cursor.execute(insert_query)
+
 postg_cursor.close()
 postg_connection.commit()
