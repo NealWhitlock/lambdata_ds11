@@ -26,7 +26,7 @@ print("CURSOR:", cursor)
 query = """
 CREATE TABLE IF NOT EXISTS passengers (
     id SERIAL PRIMARY KEY,
-    survived bool,
+    survived int,
     pclass int,
     name varchar,
     sex varchar,
@@ -53,7 +53,7 @@ for i in range(len(df)):
     sib_count = df.iloc[i][5]
     par_count = df.iloc[i][6]
     far = df.iloc[i][7]
-    values = f"({survived}, {pclass}, {name}, {sex}, {age}, {sib_count}, {par_count}, {far})"
+    values = f"({survived}, {pclass}, '{name}', '{sex}', {age}, {sib_count}, {par_count}, {far})"
     query = "INSERT INTO passengers VALUES " + values
     cursor.execute(query)
 

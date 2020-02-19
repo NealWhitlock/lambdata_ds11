@@ -13,10 +13,6 @@ DB_HOST = os.getenv("DB_HOST")
 sql_connection = sqlite3.connect('rpg_db.sqlite3')
 sql_cursor = sql_connection.cursor()
 
-# Get characters
-query = 'SELECT * FROM charactercreator_character'
-characters = sql_cursor.execute(query).fetchall()
-
 ### Connect to ElephantSQL-hosted PostgreSQL
 postg_connection = psycopg2.connect(
     dbname=DB_NAME, user=DB_USER, 
@@ -25,8 +21,12 @@ postg_connection = psycopg2.connect(
 ### A "cursor", a structure to iterate over db records to perform queries
 postg_cursor = postg_connection.cursor()
 
-# Create a new table
-query = """
+# Get characters
+query = 'SELECT * FROM charactercreator_character'
+characters = sql_cursor.execute(query).fetchall()
+
+# Create a new table for characters
+character_query = """
 CREATE TABLE IF NOT EXISTS charactercreator_character (
     character_id SERIAL PRIMARY KEY,
     name varchar,
@@ -39,14 +39,80 @@ CREATE TABLE IF NOT EXISTS charactercreator_character (
     wisdom int
 );
 """
-postg_cursor.execute(query)
+postg_cursor.execute(character_query)
 
-# Insert the characters
+# Insert the characters into character table
 for character in characters:
     insert_query = """
     INSERT INTO charactercreator_character
     (name, level, exp, hp, strength, intelligence, dexterity, wisdom)
     VALUES """ + str(character[1:])
+    postg_cursor.execute(insert_query)
+
+# Get character inventory
+query = 'SELECT * FROM charactercreator_character_inventory'
+inventory = sql_cursor.execute(query).fetchall()
+
+# Create new table for character inventory
+inventory_query = """
+CREATE TABLE IF NOT EXISTS charactercreator_character_inventory (
+    id SERIAL PRIMARY KEY,
+    character_id int,
+    item_id int
+);
+"""
+postg_cursor.execute(inventory_query)
+
+# Insert inventory data into inventory table
+for item in inventory:
+    insert_query = """
+    INSERT INTO charactercreator_character_inventory
+    (character_id, item_id)
+    VALUES """ + str(item[1:])
+    postg_cursor.execute(insert_query)
+
+# Get armory items
+query = 'SELECT * FROM armory_item'
+armory_item = sql_cursor.execute(query).fetchall()
+
+# Create new table for armory items
+armory_item_query = """
+CREATE TABLE IF NOT EXISTS armory_item (
+    item_id SERIAL PRIMARY KEY,
+    name varchar,
+    value int,
+    weight int
+);
+"""
+postg_cursor.execute(armory_item_query)
+
+# Insert data into armory items table
+for item in armory_item:
+    insert_query = """
+    INSERT INTO armory_item
+    (name, value, weight)
+    VALUES """ + str(item[1:])
+    postg_cursor.execute(insert_query)
+
+# Get armory weapons items
+query = 'SELECT * FROM armory_weapon'
+armory_weapon = sql_cursor.execute(query).fetchall()
+
+# Create new table for armory weapon
+armory_weapon_query = """
+CREATE TABLE IF NOT EXISTS armory_weapon (
+    item_ptr_id SERIAL PRIMARY KEY,
+    power int
+);
+"""
+postg_cursor.execute(armory_weapon_query)
+
+# Insert data into armory items table
+for item in armory_weapon:
+    insert_query = """
+    INSERT INTO armory_weapon
+    (item_ptr_id, power)
+    VALUES """ + str(item)
     postg_cursor.execute(insert_query)
 
 postg_cursor.close()
